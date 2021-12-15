@@ -1,0 +1,23 @@
+PODS:
+  - Apis (1.0.0)
+  - SnapKit (5.0.1)
+
+DEPENDENCIES:
+  - Apis (from `../`)
+  - SnapKit (~> 5.0.0)
+
+SPEC REPOS:
+  trunk:
+    - SnapKit
+
+EXTERNAL SOURCES:
+  Apis:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Apis: ecfe56226311038186e77c4d5ac87b447dcec059
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+
+PODFILE CHECKSUM: 199c77b4710d6bba7448d0daa0a0ecd06f10ef6c
+
+COCOAPODS: 1.11.2

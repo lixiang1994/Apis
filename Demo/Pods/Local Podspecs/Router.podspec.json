@@ -1,0 +1,28 @@
+{
+  "name": "Router",
+  "version": "2.0.0",
+  "summary": "基于URLNavigator抽象的路由组件 支持任意类型配置 插件机制",
+  "homepage": "https://github.com/lixiang1994/Router",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "LEE": "18611401994@163.com"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source": {
+    "git": "https://github.com/lixiang1994/Router.git",
+    "tag": "2.0.0"
+  },
+  "source_files": "Sources/**/*.swift",
+  "requires_arc": true,
+  "frameworks": [
+    "UIKit",
+    "Foundation"
+  ],
+  "swift_versions": "5.0",
+  "swift_version": "5.0"
+}
