@@ -2,7 +2,7 @@
 
 ![Swift](https://img.shields.io/badge/Swift-5.0-orange.svg)
 
-[URLNavigator](https://github.com/devxoul/URLNavigator) abstract routing component written in Swift, Inspired by Moya.
+[URLNavigator](https://github.com/devxoul/URLNavigator) abstract routing component written in Swift, Inspired by [Moya](https://github.com/Moya/Moya).
 
 ## [天朝子民](README_CN.md)
 
