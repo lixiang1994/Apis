@@ -2,7 +2,7 @@
 
 ![Swift](https://img.shields.io/badge/Swift-5.0-orange.svg)
 
-基于[URLNavigator](https://github.com/devxoul/URLNavigator) 抽象的路由组件, 灵感来自 Moya.
+基于[URLNavigator](https://github.com/devxoul/URLNavigator) 抽象的路由组件, 灵感来自 [Moya](https://github.com/Moya/Moya).
 
 ## Features
 
