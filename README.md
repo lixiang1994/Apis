@@ -94,7 +94,6 @@ private let schemes = "router"
 
 extension RouterTarget: URLTargetType {
     
-    // 激活的URL模板集合
     static var activated: [URLPattern] {
         return [
             "http://<path:_>",
@@ -106,7 +105,6 @@ extension RouterTarget: URLTargetType {
         ]
     }
     
-    // URL模板
     var pattern: String {
         switch self {
         case .open_http:        return "http://<path:_>"
