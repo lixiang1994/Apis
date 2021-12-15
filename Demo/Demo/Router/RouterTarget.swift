@@ -72,19 +72,6 @@ extension RouterTarget: URLTargetType {
         ]
     }
     
-    // URL模板
-    var pattern: String {
-        switch self {
-        case .open_http:        return "http://<path:_>"
-        case .open_https:       return "https://<path:_>"
-        case .open_none:        return schemes + "://open/none"
-        case .open_fast:        return schemes + "://open/fast"
-        case .open_live:        return schemes + "://open/live"
-        case .open_needlogin:   return schemes + "://open/needlogin"
-        case .open_some:        return schemes + "://open/some"
-        }
-    }
-    
     init?(pattern: URLPattern, url: URLConvertible, values: [String : Any]) {
         switch pattern {
         case "http://<path:_>":

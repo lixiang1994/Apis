@@ -61,8 +61,6 @@ public protocol URLTargetType: TargetType {
     
     static var activated: [URLPattern] { get }
     
-    var pattern: URLPattern { get }
-    
     init?(pattern: URLPattern, url: URLConvertible, values: [String: Any])
 }
 
