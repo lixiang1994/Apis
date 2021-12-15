@@ -39,8 +39,6 @@ public func controller(_ url: URLConvertible) -> Routerable? {
 
 public class Provider<Target: TargetType> {
     
-    typealias ViewControllerFactory = (_ url: URLConvertible, _ values: [String: Any], _ context: Any?) -> Routerable?
-    
     private let plugins: [PluginType]
     
     public init(plugins: [PluginType]) {
@@ -154,10 +152,11 @@ extension Provider where Target: URLTargetType {
     @discardableResult
     public func open(_ url: URLConvertible,
                      completion: ((Bool) -> Void)? = .none) -> Bool {
-        guard let result = URLMatcher().match(url, from: Target.activated) else {
+        let patterns = Target.bindings.map({ $0.pattern })
+        guard let result = navigator.matcher.match(url, from: patterns) else {
             return false
         }
-        guard let target = Target(pattern: result.pattern, url: url, values: result.values) else {
+        guard let target = self.target(result.pattern, url, result.values) else {
             return false
         }
         return open(target, completion: completion)
@@ -170,10 +169,11 @@ extension Provider where Target: URLTargetType {
     ///   - context: context
     /// - Returns: 视图控制器
     public func controller(_ url: URLConvertible) -> Routerable? {
-        guard let result = URLMatcher().match(url, from: Target.activated) else {
+        let patterns = Target.bindings.map({ $0.pattern })
+        guard let result = navigator.matcher.match(url, from: patterns) else {
             return nil
         }
-        guard let target = Target(pattern: result.pattern, url: url, values: result.values) else {
+        guard let target = self.target(result.pattern, url, result.values) else {
             return nil
         }
         return controller(target)
@@ -184,10 +184,19 @@ extension Provider where Target: URLTargetType {
     
     /// 加入全局
     public func global() {
-        Target.activated.forEach { pattern in
-            binding(pattern)
+        Target.bindings.forEach { binding in
+            self.binding(binding.pattern)
         }
     }
+    
+    private func target(_ pattern: URLPattern, _ url: URLConvertible, _ values: [String : Any]) -> Target? {
+        guard let binding = Target.bindings.last(where: { $0.pattern == pattern }) else {
+            return nil
+        }
+        return binding.target(.init(url: url, values: values))
+    }
+    
+    typealias ViewControllerFactory = (_ url: URLConvertible, _ values: [String: Any], _ context: Any?) -> Routerable?
     
     private func register(_ pattern: URLPattern, _ factory: @escaping ViewControllerFactory) {
         navigator.register(pattern) { (url, values, context) -> UIViewController? in
@@ -202,17 +211,16 @@ extension Provider where Target: URLTargetType {
     }
     
     private func binding(_ pattern: URLPattern) {
-        self.register(pattern) { (url, values, context) -> Routerable? in
-            guard
-                let target = Target(pattern: pattern, url: url, values: values),
-                case .controller(let controller) = target.task else {
+        self.register(pattern) { [weak self] (url, values, context) -> Routerable? in
+            guard let self = self else { return nil }
+            guard let target = self.target(pattern, url, values) else {
                 return nil
             }
-            return controller
+            return self.controller(target)
         }
         self.handle(pattern) { [weak self] (url, values, context) -> Bool in
             guard let self = self else { return false }
-            guard let target = Target(pattern: pattern, url: url, values: values) else {
+            guard let target = self.target(pattern, url, values) else {
                 return false
             }
             let context = context as? Context

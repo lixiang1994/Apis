@@ -57,11 +57,30 @@ public protocol TargetType {
     var task: Task { get }
 }
 
+public struct URLPatternBinding<Target: URLTargetType> {
+    
+    public struct Source {
+        public let url: URLConvertible
+        public let values: [String: Any]
+    }
+    
+    let pattern: URLPattern
+    let target: (Source) -> Target?
+    
+    public init(_ pattern: URLPattern, binding: @escaping () -> Target?) {
+        self.pattern = pattern
+        self.target = { _ in binding() }
+    }
+    
+    public init(_ pattern: URLPattern, binding: @escaping (Source) -> Target?) {
+        self.pattern = pattern
+        self.target = binding
+    }
+}
+
 public protocol URLTargetType: TargetType {
     
-    static var activated: [URLPattern] { get }
-    
-    init?(pattern: URLPattern, url: URLConvertible, values: [String: Any])
+    static var bindings: [URLPatternBinding<Self>] { get }
 }
 
 public protocol Routerable: UIViewController {
