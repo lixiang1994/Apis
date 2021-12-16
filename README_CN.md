@@ -96,53 +96,28 @@ extension SFSafariViewController: Routerable { }
 private let schemes = "router"
 
 extension RouterTarget: URLTargetType {
-    
-    // 激活的URL模板集合
-    static var activated: [URLPattern] {
+    // URL模板绑定 不同的模板返回不同的Target
+    static var bindings: [URLPatternBinding<RouterTarget>] {
         return [
-            "http://<path:_>",
-            "https://<path:_>",
-            schemes + "://open/none",
-            schemes + "://open/fast",
-            schemes + "://open/live",
-            schemes + "://open/needlogin"
+            .init("http://<path:_>") { source in
+                guard let url = source.url.value else { return .none }
+                return .open_http(url: url)
+            },
+            .init("https://<path:_>") { source in
+                guard let url = source.url.value else { return .none }
+                return .open_https(url: url)
+            },
+            .init(schemes + "://open/none") {
+                return .open_none
+            },
+            .init(schemes + "://open/live") { source in
+                guard let id = source.url.queryParameters["id"] else { return nil }
+                return .open_live(id: id)
+            },
+            .init(schemes + "://open/some") {
+                return .open_some
+            }
         ]
-    }
-    
-    // URL模板
-    var pattern: String {
-        switch self {
-        case .open_http:        return "http://<path:_>"
-        case .open_https:       return "https://<path:_>"
-        case .open_none:        return schemes + "://open/none"
-        case .open_live:        return schemes + "://open/live"
-        case .open_some:        return schemes + "://open/some"
-        }
-    }
-    
-    init?(pattern: URLPattern, url: URLConvertible, values: [String : Any]) {
-        switch pattern {
-        case "http://<path:_>":
-            guard let url = url.value else { return nil }
-            self = .open_http(url: url)
-            
-        case "https://<path:_>":
-            guard let url = url.value else { return nil }
-            self = .open_https(url: url)
-            
-        case schemes + "://open/none":
-            self = .open_none
-            
-        case schemes + "://open/live":
-            guard let id = url.queryParameters["id"] else { return nil }
-            self = .open_live(id: id)
-            
-        case schemes + "://open/some":
-            self = .open_some
-            
-        default:
-            return nil
-        }
     }
 }
 ```

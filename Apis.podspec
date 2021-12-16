@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 s.name         = "Apis"
-s.version      = "1.0.0"
+s.version      = "1.1.0"
 s.summary      = "基于URLNavigator抽象的URL路由组件 灵感来自Moya 配置化 插件化."
 
 s.homepage     = "https://github.com/lixiang1994/Apis"
