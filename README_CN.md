@@ -92,7 +92,7 @@ extension SFSafariViewController: Routerable { }
 
 ### URLTargetType
 
-```
+```swift
 private let schemes = "router"
 
 extension RouterTarget: URLTargetType {
