@@ -1,6 +1,10 @@
 # Apis
 
-![Swift](https://img.shields.io/badge/Swift-5.0-orange.svg)
+[![License](https://img.shields.io/cocoapods/l/Apis.svg)](LICENSE)&nbsp;
+![Swift](https://img.shields.io/badge/Swift-5.0-orange.svg)&nbsp;
+![Platform](https://img.shields.io/cocoapods/p/Apis.svg?style=flat)&nbsp;
+[![Carthage](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)&nbsp;
+[![Cocoapods](https://img.shields.io/cocoapods/v/Apis.svg)](https://cocoapods.org)
 
 基于[URLNavigator](https://github.com/devxoul/URLNavigator) 抽象的路由组件, 灵感来自 [Moya](https://github.com/Moya/Moya).
 
